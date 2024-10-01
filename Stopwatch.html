@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch and Analog Clock</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- View Mode Toggle -->
+        <div class="view-toggle">
+            <button id="viewToggleStopwatch" class="active">Digital Stopwatch</button>
+            <button id="viewToggleAnalog">Analog Clock</button>
+        </div>
+
+        <!-- Digital Stopwatch Section -->
+        <div id="digitalStopwatchSection" class="stopwatch-display">
+            <div id="timeDisplay" class="time-display">
+                <div class="time-text">00:00:00</div>
+            </div>
+        </div>
+
+        <!-- Analog Clock Section -->
+        <div id="analogClockSection" class="clock hidden">
+
+
+            <!-- Second markers -->
+            <div id="analogMarkers">
+                <div class="second-marker top major"></div>
+                <div class="second-marker bottom major"></div>
+                <div class="second-marker left major"></div>
+                <div class="second-marker right major"></div>
+                <label style="--i: 5;"><span>25</span></label>
+                <label style="--i: 10;"><span>50</span></label>
+                <label style="--i: 15;"><span>15</span></label>
+                <label style="--i: 20;"><span>40</span></label>
+                <label style="--i: 25;"><span>5</span></label>
+                <label style="--i: 30;"><span>30</span></label>
+                <label style="--i: 35;"><span>55</span></label>
+                <label style="--i: 40;"><span>20</span></label>
+                <label style="--i: 45;"><span>45</span></label>
+                <label style="--i: 50;"><span>10</span></label>
+                <label style="--i: 55;"><span>35</span></label>
+                <label style="--i: 60;"><span>60</span></label>
+
+            </div>
+
+            <div class="indicator">
+                <span class="hand hour" id="hourHand"></span>
+                <span class="hand minute" id="minuteHand"></span>
+                <span class="hand second" id="secondHand"></span>
+            </div>
+        </div>
+
+        <!-- Buttons and Laps Section -->
+        <div class="buttons-laps-container">
+            <div class="buttons">
+                <button id="lapResetButton" class="lap-reset-button reset">Reset</button>
+                <button id="startStopButton" class="start-stop-button start">Start</button>
+            </div>
+            <div class="laps">
+                <ul id="lapsList"></ul>
+            </div>
+        </div>
+
+        <!-- Dark Mode Toggle -->
+        <div class="mode-switch" id="modeToggleButton">Light Mode</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

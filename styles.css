@@ -1,0 +1,399 @@
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+:root {
+  --primary-color: #f6f7fb;
+  --white-color: #fff;
+  --black-color: #18191a;
+  --red-color: #e74c3c;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-color);
+  padding: 0;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+body.dark {
+  --primary-color: #242526;
+  --black-color: #18191a;
+  --white-color: #fff;
+  --red-color: #e74c3c;
+}
+
+/* Container styles for both clock and stopwatch */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  position: relative;
+  padding: 0;
+}
+
+/* Fixed View Mode Toggle */
+.view-toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 20px;
+  background: transparent;
+  z-index: 1000;
+  margin-bottom: 30px;
+}
+
+.view-toggle button {
+  border-radius: 50%;
+  background: #eee;
+  border: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.view-toggle button.active {
+  background: #333;
+  color: #fff;
+  transform: scale(1.1);
+  border: 2px solid var(--black-color);
+}
+
+.view-toggle button:hover {
+  transform: scale(1.2);
+}
+
+/* Mode Switcher */
+.mode-switch {
+  position: fixed;
+  bottom: 20px;
+  left: 10%;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--white-color);
+  background: var(--black-color);
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: background 0.3s, color 0.3s, transform 0.3s;
+}
+
+.mode-switch:hover {
+  background: var(--white-color);
+  color: var(--black-color);
+  transform: scale(1.05);
+}
+
+body.dark .mode-switch{
+  background-color: var(--white-color);
+  color: var(--black-color);
+}
+
+
+body.dark .mode-switch:hover{
+  background: var(--black-color);
+  color: var(--white-color);
+  transform: scale(1.05);
+}
+
+
+/* Analog Clock Styles */
+.clock {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 300px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background: var(--white-color);
+  box-shadow: 0px 0px 50px 10px rgba(87, 87, 87, 0.5);
+  position: relative;
+  margin: 0 auto;
+}
+
+/* Position markers at corners */
+.second-marker {
+  position: absolute;
+  width: 2px;
+  height: 20px; /* Adjust height as needed */
+  background-color: var(--black-color);
+  transform-origin: center;
+}
+
+/* Major markers */
+.second-marker.major {
+  height: 20px; /* Major markers slightly taller */
+}
+
+/* Minor markers */
+.second-marker.minor {
+  height: 25px; /* Minor markers slightly shorter */
+  opacity: 0.6;
+}
+
+/* Bottom marker */
+.second-marker.bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg); /* Rotate to point towards the center */
+}
+
+/* Top marker */
+.second-marker.top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg); /* Top marker */
+}
+
+/* Left marker */
+.second-marker.left {
+  top: 50%;
+  left: 9px;
+  transform: translateY(-50%) rotate(90deg); /* Left marker */
+}
+
+/* Right marker */
+.second-marker.right {
+  top: 50%;
+  right: 9px;
+  transform: translateY(-50%) rotate(-90deg); /* Right marker */
+}
+
+
+
+.clock label {
+  position: absolute;
+  inset: 12px;
+  text-align: center;
+  transform: rotate(calc(var(--i) * (360deg / 12)));
+}
+
+.clock label span {
+  display: inline-block;
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black-color);
+  transform: rotate(calc(var(--i) * (-360deg / 12)));
+}
+
+.indicator {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.indicator::before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  z-index: 100;
+  background: var(--black-color);
+  border: 4px solid var(--red-color);
+}
+
+.indicator .hand {
+  position: absolute;
+  height: 120px;
+  width: 4px;
+  bottom: 0;
+  border-radius: 25px;
+  transform-origin: bottom;
+  background: var(--red-color);
+}
+
+.hand.minute {
+  height: 120px;
+  width: 5px;
+  background: var(--black-color);
+}
+
+.hand.hour {
+  height: 100px;
+  width: 5px;
+  background: var(--black-color);
+}
+
+/* Stopwatch Styles */
+.stopwatch-container {
+  max-width: 500px;
+  width: 400px;
+  height: 670px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100px;
+  color: var(--white-color);
+  padding-top: 100px;
+}
+
+.time-display {
+  align-items: center;
+  display: flex; /* Enables Flexbox */
+  border-radius: 10px;
+  perspective: 1000;
+  color: var(--black-color);
+  font-size: 5rem; /* Size of the font, adjust if needed */
+  letter-spacing: 2px;
+  font-weight: 300;
+  margin-bottom: 30px;
+  max-width: 500px; /* Max width to ensure it doesn't stretch too much */
+  width: 335px; /* Adjust as needed */
+  height: 150px; /* Define a height to center vertically */
+  box-shadow: 7px 5px 10px 5px rgba(87, 87, 87, 0.5);
+  overflow: hidden; /* Hide overflow to prevent content clipping */
+  position: relative; /* Ensure absolute positioning works for children */
+}
+
+body.dark .time-display{
+  color: var(--white-color);
+
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  margin-bottom: 10px;
+}
+
+.lap-reset-button,
+.start-stop-button {
+  border: none;
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+  font-size: 1rem;
+  color: var(--black-color);
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lap-reset-button.lap {
+  background-color: #fbfb07;
+}
+
+.lap-reset-button.reset {
+  background-color: #ff453a;
+}
+
+.start-stop-button.start {
+  background-color: #30d158;
+}
+
+.start-stop-button.stop {
+  background-color: #ff453a;
+}
+
+/* Hover effects with different glow colors */
+.lap-reset-button.lap:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px 15px rgba(255, 255, 0, 0.7); /* Yellow glow */
+}
+
+.lap-reset-button.reset:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px 15px rgba(255, 69, 58, 0.7); /* Red glow */
+}
+
+.start-stop-button.start:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px 15px rgba(48, 209, 88, 0.7); /* Green glow */
+}
+
+.start-stop-button.stop:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px 15px rgba(255, 69, 58, 0.7); /* Red glow */
+}
+
+.laps {
+  border: 2px solid var(--black-color);
+  border-radius: 10px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 350px;
+  height: 327px;
+  overflow-y: auto; /* Allow scrolling */
+  display: flex;
+  flex-direction: column; /* New laps appear at the top */
+}
+
+/* Hide scrollbar for all browsers */
+.laps::-webkit-scrollbar {
+  width: 0; /* Chrome, Safari, and Opera */
+  height: 0;
+}
+
+.laps {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.laps ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  gap: 10px;
+  color: var(--black-color); /* Sets lap text color to black */
+
+}
+
+.laps li {
+  padding: 8px;
+  border-bottom: 1px solid var(--black-color);
+  display: flex;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
+
+}
+
+.laps li .lap-number {
+  margin-right: 10px;
+}
+
+.laps li .lap-time {
+  font-weight: bold;
+  color: var(--red-color);
+}
+
+.laps li:hover {
+  transform: scale(1.05); /* Scale up on hover */
+}
+
+
+/* Dark mode styles (white lap text) */
+body.dark .laps  {
+  border: 2px solid var(--white-color);
+}
+
+body.dark .laps li  {
+  border-bottom: 1px solid var(--white-color);
+}
+
+body.dark .laps ul {
+  color: var(--white-color); /* Overrides lap text color to white in dark mode */
+}
+
+.hidden {
+  display: none;
+}
